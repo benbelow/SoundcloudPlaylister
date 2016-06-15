@@ -53,7 +53,7 @@ function createPlaylist(trackIds){
         if(newTracks.length == 0){
           return;
         }
-        var allTracks = existingList.tracks.concat(newTracks);
+        var allTracks = newTracks.concat(existingList.tracks);
         var addTracks = function(playlist) {
           return SC.put('/playlists/' + playlist.id, {
             playlist: { tracks: allTracks }
