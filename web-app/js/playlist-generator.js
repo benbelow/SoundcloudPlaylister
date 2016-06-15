@@ -1,5 +1,5 @@
 function generatePlaylistFromComments(){
-  fetch("http://www.reddit.com/r/" + document.foorm.subreddit.value + "/comments/" + document.foorm.postId.value + ".json?")
+  fetch(document.playlistForm.postLink.value + ".json?")
   .then(function(response){
     return response.json();
   })
@@ -30,32 +30,41 @@ function getSoundCloudIdsFromLinks(links){
 function createPlaylist(trackIds){
   var tracks = trackIds.map(function(id){return {"id": id}});
   getExistingPlaylists().then(function(playlists){
-    var newPlaylistName = document.foorm.subreddit.value + document.foorm.postId.value
-    var existingNames = playlists.map(function(playlist){return playlist.title})
-    if(!existingNames.includes(newPlaylistName)){
-        SC.connect().then(function() {
-        SC.post('/playlists', {
-          playlist: { title: newPlaylistName, tracks: tracks }
+    var newPlaylistName;
+    fetch(document.playlistForm.postLink.value + ".json?")
+    .then(function(response){
+      return response.json();
+    })
+    .then(function(data){
+      newPlaylistName = data[0].data.children[0].data.title
+    })
+    .then(function(){
+      var existingNames = playlists.map(function(playlist){return playlist.title})
+      if(!existingNames.includes(newPlaylistName)){
+          SC.connect().then(function() {
+          SC.post('/playlists', {
+            playlist: { title: newPlaylistName, tracks: tracks }
+          });
         });
-      });
-    }
-    else{
-      var existingList = playlists.filter(function(playlist){return playlist.title == newPlaylistName})[0];
-      var newTracks = tracks.filter(function(track){return !existingList.tracks.map(function(t){return t.id}).includes(track.id) });
-      if(newTracks.length == 0){
-        return;
       }
-      var allTracks = existingList.tracks.concat(newTracks);
-      var addTracks = function(playlist) {
-        return SC.put('/playlists/' + playlist.id, {
-          playlist: { tracks: allTracks }
-        });
-      };
-      for(var i=0; i<newTracks.length; i++){
-        addTracks(existingList);
-      };
-      console.log(newTracks);
-    }
+      else{
+        var existingList = playlists.filter(function(playlist){return playlist.title == newPlaylistName})[0];
+        var newTracks = tracks.filter(function(track){return !existingList.tracks.map(function(t){return t.id}).includes(track.id) });
+        if(newTracks.length == 0){
+          return;
+        }
+        var allTracks = existingList.tracks.concat(newTracks);
+        var addTracks = function(playlist) {
+          return SC.put('/playlists/' + playlist.id, {
+            playlist: { tracks: allTracks }
+          });
+        };
+        for(var i=0; i<newTracks.length; i++){
+          addTracks(existingList);
+        };
+        console.log(newTracks);
+      }
+    });
   });
 }
 
