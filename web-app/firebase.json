@@ -1,0 +1,10 @@
+{
+  "firebase": "reddit-to-soundcloud",
+  "public": "public",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**",
+    "public/server.js"
+  ]
+}
