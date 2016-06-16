@@ -40,10 +40,11 @@ function createPlaylist(trackIds){
     })
     .then(function(){
       var existingNames = playlists.map(function(playlist){return playlist.title})
+      var sharing = document.playlistForm.isPrivatePlaylist.checked ? "private" : "public";
       if(!existingNames.includes(newPlaylistName)){
           SC.connect().then(function() {
           SC.post('/playlists', {
-            playlist: { title: newPlaylistName, tracks: tracks }
+            playlist: { title: newPlaylistName, tracks: tracks, sharing: sharing }
           });
         });
       }
@@ -56,7 +57,7 @@ function createPlaylist(trackIds){
         var allTracks = newTracks.concat(existingList.tracks);
         var addTracks = function(playlist) {
           return SC.put('/playlists/' + playlist.id, {
-            playlist: { tracks: allTracks }
+            playlist: { tracks: allTracks, sharing: sharing }
           });
         };
         for(var i=0; i<newTracks.length; i++){
