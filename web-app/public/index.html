@@ -2,6 +2,8 @@
 <html>
   <head>
     <title>Soundcloud Playlister</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script src="https://connect.soundcloud.com/sdk/sdk-3.1.2.js"></script>
     <script type="text/javascript" src="js/soundcloud-login.js"></script>
@@ -9,12 +11,25 @@
   </head>
 
   <body>
-    <h1>Soundcloud Playlister</h1>
-    <form name="playlistForm" action="javascript:generatePlaylistFromComments();">
-      Link:<br>
-      <input type="text" name="postLink" value="https://www.reddit.com/r/songaweek/comments/4n9592/submissions_week_24_theme_dorian/"><br>
-      <input type="submit" value="Submit">
-    </form>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container col-md-offset-1">
+        <h1>Soundcloud Playlister</h1>
+      </div>
+    </nav>
+    <div class="col-md-offset-1">
+      <form name="playlistForm" action="javascript:generatePlaylistFromComments();">
+        <br/>
+        <div class="form-group">
+          <label> Link to Reddit thread: </label>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" name="postLink" value="https://www.reddit.com/r/songaweek/comments/4n9592/submissions_week_24_theme_dorian/"><br>
+        </div>
+        <div class="form-group">
+          <input type="submit" class="btn btn-default" value="Submit">
+        </div>
+      </form>
+    </div>
   </body>
 
 </html>
