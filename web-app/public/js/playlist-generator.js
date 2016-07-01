@@ -45,6 +45,9 @@ function createPlaylist(trackIds){
           SC.connect().then(function() {
           SC.post('/playlists', {
             playlist: { title: newPlaylistName, tracks: tracks, sharing: sharing }
+          })
+          .then(function(data){
+            $("#playlistLink").text('I GOT YOU A PLAYLIST!');
           });
         });
       }
@@ -58,7 +61,11 @@ function createPlaylist(trackIds){
         var addTracks = function(playlist) {
           return SC.put('/playlists/' + playlist.id, {
             playlist: { tracks: allTracks, sharing: sharing }
-          });
+          })
+          .then(function(data){
+            $("#playlistLink").text(data.title);
+            $("#playlistLink").attr("href", data.permalink_url);
+          });;
         };
         for(var i=0; i<newTracks.length; i++){
           addTracks(existingList);
