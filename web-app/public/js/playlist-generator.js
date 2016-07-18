@@ -1,3 +1,17 @@
+function setUpDefaultLink(){
+  fetch("https://www.reddit.com/r/songaweek/new.json?sort=new")
+  .then(function(response){
+    return response.json();
+  })
+  .then(function(data){
+    var posts = data.data.children.map(function(x){return x.data});
+    var submissionPosts = posts.filter(function(x){return x.title.includes("Submissions") && x.title.includes("Week")})
+    document.playlistForm.postLink.value = submissionPosts[1].url;
+  })
+}
+
+setUpDefaultLink();
+
 function generatePlaylistFromComments(){
   fetch(document.playlistForm.postLink.value + ".json?")
   .then(function(response){
