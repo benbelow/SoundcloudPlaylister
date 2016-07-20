@@ -68,22 +68,14 @@ function createPlaylist(trackIds){
       else{
         var existingList = playlists.filter(function(playlist){return playlist.title == newPlaylistName})[0];
         var newTracks = tracks.filter(function(track){return !existingList.tracks.map(function(t){return t.id}).includes(track.id) });
-        if(newTracks.length == 0){
-          return;
-        }
         var allTracks = newTracks.concat(existingList.tracks);
-        var addTracks = function(playlist) {
-          return SC.put('/playlists/' + playlist.id, {
+        SC.put('/playlists/' + existingList.id, {
             playlist: { tracks: allTracks, sharing: sharing }
           })
           .then(function(data){
             $("#playlistLink").text(data.title);
             $("#playlistLink").attr("href", data.permalink_url);
           });;
-        };
-        for(var i=0; i<newTracks.length; i++){
-          addTracks(existingList);
-        };
         console.log(newTracks);
       }
     });
