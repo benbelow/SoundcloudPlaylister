@@ -61,7 +61,8 @@ function createPlaylist(trackIds){
             playlist: { title: newPlaylistName, tracks: tracks, sharing: sharing }
           })
           .then(function(data){
-            $("#playlistLink").text('I GOT YOU A PLAYLIST!');
+            $("#playlistLink").text(data.title);
+            $("#playlistLink").attr("href", data.permalink_url);
           });
         });
       }
