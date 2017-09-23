@@ -4,9 +4,8 @@ import {MuiThemeProvider} from 'material-ui';
 import logo from './logo.svg';
 import './App.css';
 import store from './redux/store';
-import PlaylistGenerator from "./components/PlaylistGenerator/PlaylistGenerator";
-import SubmissionThread from "./components/SubmissionThread";
 import ThreadFetcher from "./components/ThreadFetcher/ThreadFetcher";
+import SubmissionThreads from "./components/SubmissionThreads";
 
 class App extends Component {
   render() {
@@ -19,8 +18,7 @@ class App extends Component {
               <h2>Welcome to React</h2>
             </div>
             <ThreadFetcher/>
-            <PlaylistGenerator targetUrl={"https://www.reddit.com/r/songaweek/comments/4asd0x/submissions_week_12_theme_foreign_language/"}/>
-            <SubmissionThread/>
+            <SubmissionThreads/>
           </div>
         </MuiThemeProvider>
       </Provider>

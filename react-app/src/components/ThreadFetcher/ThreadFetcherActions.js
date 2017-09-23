@@ -17,7 +17,6 @@ export function fetchThreads() {
       .then(response => response.json())
       .then(data => _.map(data.data.children, c => c.data))
       .then(threads => _.filter(threads, isSubmissionThread))
-      .then(submissionThreads => console.log(submissionThreads))
       .then(submissionThreads => dispatch(updateThreads(submissionThreads)))
   }
 }
