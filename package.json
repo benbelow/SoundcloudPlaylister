@@ -1,0 +1,27 @@
+{
+  "name": "soundcloudplaylister",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benbelow/SoundcloudPlaylister.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/benbelow/SoundcloudPlaylister/issues"
+  },
+  "homepage": "https://github.com/benbelow/SoundcloudPlaylister#readme",
+  "dependencies": {
+    "create-react-app": "^1.4.0",
+    "lodash": "^4.17.4",
+    "material-ui": "^0.19.2",
+    "moment": "^2.18.1",
+    "prop-types": "^15.5.10",
+    "soundcloud": "^3.2.2"
+  }
+}
