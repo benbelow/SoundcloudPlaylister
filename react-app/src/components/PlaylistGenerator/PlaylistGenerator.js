@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import PropTypes from 'prop-types';
 import {FlatButton} from "material-ui";
 import {connect} from "react-redux";
-import {createPlaylistFromUrl} from "./PlaylistGeneratorActions";
+import {fetchSubmissions} from "./PlaylistGeneratorActions";
 
 class PlaylistGenerator extends Component {
 
@@ -21,7 +21,7 @@ class PlaylistGenerator extends Component {
 const mapDispatchToProps = dispatch => {
   return {
     createPlaylist: url => {
-      dispatch(createPlaylistFromUrl(url));
+      dispatch(fetchSubmissions(url));
     },
   };
 };
