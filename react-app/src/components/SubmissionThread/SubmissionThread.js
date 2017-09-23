@@ -14,18 +14,31 @@ class SubmissionThread extends Component {
     threadSubmissions: PropTypes.array,
   };
 
+  constructor(props) {
+    super(props);
+    this.submissions = this.submissions.bind(this);
+    this.fetchSubmissions = this.fetchSubmissions.bind(this);
+  }
+
   submissions() {
     let currentSubmissions = _.filter(this.props.threadSubmissions, ts => this.props.thread.id === ts.threadId);
     let currentSubmission = _.first(currentSubmissions);
-    console.log(currentSubmission);
     return currentSubmission && currentSubmission.submissions;
+  }
+
+  fetchSubmissions() {
+    if (!this.submissions()) {
+      this.props.fetchSubmissions(this.props.thread.id, this.props.thread.url)
+    }
   }
 
   render() {
     const thread = this.props.thread;
 
     return (
-      <Card>
+      <Card
+        onExpandChange={this.fetchSubmissions}
+      >
         <CardHeader
           title={theme(thread)}
           subtitle={week(thread)}
@@ -35,7 +48,6 @@ class SubmissionThread extends Component {
         <CardActions/>
         <CardText expandable={true}>
           <ReactMarkdown source={description(thread)}/>
-          <FlatButton onClick={() => this.props.fetchSubmissions(thread.id, thread.url)}>Fetch Tracks</FlatButton>
           <List>
             {_.map(this.submissions(), s => <ListItem>{s}</ListItem>)}
           </List>
