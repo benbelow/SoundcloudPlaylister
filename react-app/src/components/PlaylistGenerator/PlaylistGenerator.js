@@ -18,12 +18,6 @@ class PlaylistGenerator extends Component {
     )
   }
 }
-
-const mapStateToProps = state => {
-  return {
-  };
-};
-
 const mapDispatchToProps = dispatch => {
   return {
     createPlaylist: url => {
@@ -32,4 +26,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PlaylistGenerator);
+export default connect(() => {return {}}, mapDispatchToProps)(PlaylistGenerator);

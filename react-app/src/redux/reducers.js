@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import playlistGenerator from '../components/PlaylistGenerator/PlaylistGeneratorReducer';
+import threads from '../components/ThreadFetcher/ThreadFetcherReducer';
 
 export default combineReducers({
-  playlistGenerator,
+  threads,
 });
