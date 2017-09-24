@@ -5,7 +5,7 @@ import {Avatar, ListItem, RaisedButton} from "material-ui";
 
 const SubmissionHeader = (props) => {
   const buttonStyle = {marginLeft: '4px', marginRight: '4px'};
-  const openLink = () => window.location = props.link;
+  const openLink = () => window.open(props.link, '_blank');
   return (
     <Flexbox flexDirection='row' alignItems='flex-start'>
       <ListItem
