@@ -6,6 +6,7 @@ import ReactMarkdown from 'react-markdown';
 import {connect} from "react-redux";
 import _ from "lodash";
 import {fetchSubmissions} from "./SubmissionThreadActions";
+import Submission from "../Submission/Submission";
 
 
 class SubmissionThread extends Component {
@@ -23,6 +24,7 @@ class SubmissionThread extends Component {
   submissions() {
     let currentSubmissions = _.filter(this.props.threadSubmissions, ts => this.props.thread.id === ts.threadId);
     let currentSubmission = _.first(currentSubmissions);
+    // console.log(currentSubmission && currentSubmission.submissions);
     return currentSubmission && currentSubmission.submissions;
   }
 
@@ -48,10 +50,9 @@ class SubmissionThread extends Component {
         <CardActions/>
         <CardText expandable={true}>
           <ReactMarkdown source={description(thread)}/>
-          <List>
-            {_.map(this.submissions(), s => <ListItem>{s}</ListItem>)}
-          </List>
-
+          {_.map(this.submissions(), s => {
+            return <Submission author={s.author} comment={s.comment} />
+          })}
         </CardText>
       </Card>
     );
