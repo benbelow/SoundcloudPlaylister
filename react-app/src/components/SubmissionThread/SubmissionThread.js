@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {
-  Card, CardActions, CardHeader, CardText, Divider, FlatButton, GridList, GridTile, List,
-  ListItem
-} from "material-ui";
+import {Card, CardActions, CardHeader, CardText, Divider} from "material-ui";
 import Flexbox from 'flexbox-react';
 import {description, theme, week} from "./ThreadHelpers";
 import ReactMarkdown from 'react-markdown';

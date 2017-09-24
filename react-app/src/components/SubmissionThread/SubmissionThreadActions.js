@@ -1,6 +1,5 @@
 import _ from 'lodash';
-import {containsUrl, extractUrls} from "../../helpers/UrlParser";
-import {containsSoundCloudUrl, isSoundCloudUrl} from "../../soundcloud/UrlValidator";
+import {containsSoundCloudUrl} from "../../soundcloud/UrlValidator";
 
 export const UPDATE_SUBMISSIONS = 'UPDATE_SUBMISSIONS';
 

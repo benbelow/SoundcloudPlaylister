@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Flexbox from 'flexbox-react';
-import {Avatar, CardHeader, ListItem, RaisedButton, TableHeader} from "material-ui";
+import {Avatar, ListItem, RaisedButton} from "material-ui";
 
 const SubmissionHeader = (props) => {
   const buttonStyle = {marginLeft: '4px', marginRight: '4px'};
