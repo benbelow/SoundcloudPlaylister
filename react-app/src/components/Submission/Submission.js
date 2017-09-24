@@ -5,6 +5,7 @@ import {Chip, Divider, Paper} from "material-ui";
 import Formatter from "./Formatter";
 import SubmissionHeader from "./SubmissionHeader";
 import {getHostIconUrl} from "./HostIcons";
+import muiThemeable from 'material-ui/styles/muiThemeable';
 
 function isEmptyOrSpaces(str) {
   return str === null || str.match(/^ *$/) !== null;
@@ -56,8 +57,13 @@ class Submission extends Component {
         <div>
           <Divider/>
           <div style={this.chipContainerStyle}>
-            {genre ? <Chip style={this.chipStyle}> {genre} </Chip> : undefined}
-            <Chip style={this.chipStyle}> {themed ? 'Themed' : 'Not Themed'} </Chip>
+            {genre ? <Chip style={this.chipStyle} backgroundColor={this.props.muiTheme.palette.primary2Color}> {genre} </Chip> : undefined}
+            <Chip
+              style={this.chipStyle}
+              backgroundColor={themed ? this.props.muiTheme.palette.primary1Color : this.props.muiTheme.palette.disabledColor}
+            >
+              {themed ? 'Themed' : 'Not Themed'}
+            </Chip>
           </div>
         </div>
       );
@@ -87,4 +93,4 @@ class Submission extends Component {
   };
 }
 
-export default Submission;
+export default muiThemeable()(Submission);
