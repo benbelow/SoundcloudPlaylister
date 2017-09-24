@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Card, CardActions, CardHeader, CardText, FlatButton, List, ListItem} from "material-ui";
+import {Card, CardActions, CardHeader, CardText, Divider, FlatButton, List, ListItem} from "material-ui";
 import {description, theme, week} from "./ThreadHelpers";
 import ReactMarkdown from 'react-markdown';
 import {connect} from "react-redux";
@@ -13,6 +13,10 @@ class SubmissionThread extends Component {
   static propTypes = {
     thread: PropTypes.object.isRequired,
     threadSubmissions: PropTypes.array,
+  };
+
+  cardStyle = {
+    margin: 16,
   };
 
   constructor(props) {
@@ -39,16 +43,18 @@ class SubmissionThread extends Component {
 
     return (
       <Card
+        style={this.cardStyle}
         onExpandChange={this.fetchSubmissions}
       >
         <CardHeader
           title={theme(thread)}
           subtitle={week(thread)}
-          actAsExpander={true}
-          showExpandableButton={true}
+          actAsExpander
+          showExpandableButton
         />
         <CardActions/>
-        <CardText expandable={true}>
+        <Divider/>
+        <CardText expandable>
           <ReactMarkdown source={description(thread)}/>
           {_.map(this.submissions(), (s, i) => {
             return <Submission key={s.author + i} author={s.author} comment={s.comment} />

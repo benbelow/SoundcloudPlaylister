@@ -5,8 +5,8 @@ const markdownLinkWithSpaceRegex = /(?:__|[*#])|\[(.*?)\] \(.*?\)/g;
 const themedRegex = /(\[|\()Themed(]|\))/ig;
 const notThemedRegex = /(\[|\()Not Themed(]|\))/ig;
 
-const openingBracketsRegex = /^\s+\(([^)]+)\)/g;
-const openingSquareBracketsRegex = /^\s+\[([^)]+)]/g;
+const openingBracketsRegex = /^(\s?)+\(([^)]+)\)/g;
+const openingSquareBracketsRegex = /^(\s?)+\[([^\]]+)]/g;
 
 export default class Formatter {
   constructor(comment) {
@@ -37,7 +37,7 @@ export default class Formatter {
   }
 
 // This actually trims an matched set of parens or square brackets, and only if they are at the start of the string
-// This should be the case for songaweek comments, provided the link and theme flag have been stripped already
+// This should be the case for songaweek comments, provided the markdownLink and theme flag have been stripped already
   stripGenre() {
     this.formattedComment = this.formattedComment
       .replace(openingBracketsRegex, "")
@@ -51,10 +51,24 @@ export default class Formatter {
     return value;
   }
 
-  link() {
+  markdownLink() {
     let fixedComment = this.fixMarkdownLinkWithSpace().format();
     let linkMatch = fixedComment.match(markdownLinkRegex);
     return linkMatch ? linkMatch[0] : undefined;
+  }
+
+  link() {
+    const markdownLink = this.markdownLink();
+    const linkInParens = markdownLink.replace(openingSquareBracketsRegex, "");
+    return linkInParens.match(/\((.*?)\)/)[1];
+  }
+
+  title() {
+    let fixedComment = this.fixMarkdownLinkWithSpace().format();
+    if (markdownLinkRegex.test(fixedComment)) {
+      return fixedComment.match(/\[(.*?)]/)[1];
+    }
+    return undefined;
   }
 
   description() {
