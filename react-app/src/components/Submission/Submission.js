@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import {Chip, Divider, Paper} from "material-ui";
 import Formatter from "./Formatter";
 import SubmissionHeader from "./SubmissionHeader";
-
-const scLogoUrl = "https://images.vexels.com/media/users/3/137412/isolated/preview/1802b9d8ce3c819eebe90a86bbb61077-soundcloud-icon-logo-by-vexels.png";
+import {getHostIconUrl} from "./HostIcons";
 
 function isEmptyOrSpaces(str) {
   return str === null || str.match(/^ *$/) !== null;
@@ -40,10 +39,6 @@ class Submission extends Component {
     const genre = formatter.genre();
     const link = formatter.markdownLink();
     const description = formatter.description();
-
-    const shouldShowChips = () => {
-      return genre || themed;
-    };
 
     const descriptionSection = () => {
       return (
@@ -80,13 +75,13 @@ class Submission extends Component {
           style={{position: 'absolute'}}
           title={songTitle}
           subtitle={this.props.author}
-          imageSrc={scLogoUrl}
+          imageSrc={getHostIconUrl(link)}
           link={formatter.link()}
           onExpand={() => this.setState({isExpanded: !this.state.isExpanded})}
           canExpand={!isEmptyOrSpaces(description)}
         />
         {this.state.isExpanded ? descriptionSection() : undefined}
-        {shouldShowChips() ? chipSection() : undefined}
+        {chipSection()}
       </Paper>
     )
   };

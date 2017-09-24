@@ -1,7 +1,12 @@
 import _ from 'lodash';
-import {containsSoundCloudUrl} from "../../soundcloud/UrlValidator";
+import {isValidSubmissionUrl} from "../../helpers/UrlValidator";
+import {extractUrls} from "../../helpers/UrlParser";
 
 export const UPDATE_SUBMISSIONS = 'UPDATE_SUBMISSIONS';
+
+const containsValidSubmissionUrl = comment => {
+  return _.filter(extractUrls(comment), u => isValidSubmissionUrl(u)).length > 0;
+};
 
 export function updateSubmissions(threadSubmissions) {
   return {
@@ -24,7 +29,8 @@ export function fetchSubmissions(threadId, url) {
           }
         });
       })
-      .then(results => _.filter(results, r => containsSoundCloudUrl(r.comment)))
+      .then(r => _.each(r, r2 => console.log(extractUrls(r2.comment))))
+      .then(results => _.filter(results, r => containsValidSubmissionUrl(r.comment)))
       .then(submissions => dispatch(updateSubmissions({threadId: threadId, submissions: submissions})))
   }
 }
