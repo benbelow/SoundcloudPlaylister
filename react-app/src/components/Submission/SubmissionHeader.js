@@ -18,7 +18,7 @@ const SubmissionHeader = (props) => {
           style={buttonStyle}
           label="LISTEN"
           primary
-          onClick={() => window.location = this.link}
+          onClick={() => window.location = props.link}
         />
         <RaisedButton
           style={buttonStyle}
