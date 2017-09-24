@@ -17,6 +17,11 @@ class Submission extends Component {
     author: PropTypes.string.isRequired,
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {isExpanded: false}
+  }
+
   cardStyle = {};
 
   cardContentStyle = {
@@ -41,6 +46,18 @@ class Submission extends Component {
     const shouldShowChips = () => {
       return genre || themed;
     };
+
+    const descriptionSection = () => {
+      return (
+        <div>
+          <Divider/>
+          <div style={{maxWidth: '350', margin: 'auto'}}>
+            <ReactMarkdown source={formatter.description()}/>
+          </div>
+        </div>
+      );
+    };
+
     const chipSection = () => {
       return (
         <div>
@@ -50,7 +67,7 @@ class Submission extends Component {
             <Chip style={this.chipStyle}> {themed ? 'Themed' : 'Not Themed'} </Chip>
           </div>
         </div>
-      )
+      );
     };
 
     const themed = formatter.themed();
@@ -67,11 +84,9 @@ class Submission extends Component {
           subtitle={this.props.author}
           imageSrc={scLogoUrl}
           link={formatter.link()}
+          onExpand={() => this.setState({isExpanded: !this.state.isExpanded})}
         />
-        <Divider/>
-        <div style={{maxWidth: '350', margin: 'auto'}}>
-          <ReactMarkdown source={formatter.description()}/>
-        </div>
+        {this.state.isExpanded ? descriptionSection() : undefined}
         {shouldShowChips() ? chipSection() : undefined}
       </Paper>
     )

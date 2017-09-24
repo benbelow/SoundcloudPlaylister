@@ -74,7 +74,11 @@ class SubmissionThread extends Component {
                    flexBasis='content'
           >
             {_.map(this.submissions(), (s, i) => {
-              return <Flexbox margin="8px"> <Submission key={s.author + i} author={s.author} comment={s.comment}/></Flexbox>
+              return (
+                <Flexbox key={s.author + i} margin="8px">
+                  <Submission author={s.author} comment={s.comment}/>
+                </Flexbox>
+              )
             })}
           </Flexbox>
 
