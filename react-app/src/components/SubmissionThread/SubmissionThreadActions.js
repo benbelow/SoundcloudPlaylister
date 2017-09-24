@@ -29,7 +29,6 @@ export function fetchSubmissions(threadId, url) {
           }
         });
       })
-      .then(r => _.each(r, r2 => console.log(extractUrls(r2.comment))))
       .then(results => _.filter(results, r => containsValidSubmissionUrl(r.comment)))
       .then(submissions => dispatch(updateSubmissions({threadId: threadId, submissions: submissions})))
   }
