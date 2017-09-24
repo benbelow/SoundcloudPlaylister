@@ -11,6 +11,10 @@ import SubmissionHeader from "./SubmissionHeader";
 
 const scLogoUrl = "https://images.vexels.com/media/users/3/137412/isolated/preview/1802b9d8ce3c819eebe90a86bbb61077-soundcloud-icon-logo-by-vexels.png";
 
+function isEmptyOrSpaces(str) {
+  return str === null || str.match(/^ *$/) !== null;
+}
+
 class Submission extends Component {
   static propTypes = {
     comment: PropTypes.string.isRequired,
@@ -43,6 +47,8 @@ class Submission extends Component {
     const formatter = new Formatter(this.props.comment);
     const genre = formatter.genre();
     const link = formatter.markdownLink();
+    const description = formatter.description();
+
     const shouldShowChips = () => {
       return genre || themed;
     };
@@ -51,8 +57,8 @@ class Submission extends Component {
       return (
         <div>
           <Divider/>
-          <div style={{maxWidth: '350', margin: 'auto'}}>
-            <ReactMarkdown source={formatter.description()}/>
+          <div style={{maxWidth: '350px', margin: 'auto'}}>
+            <ReactMarkdown source={description}/>
           </div>
         </div>
       );
@@ -85,6 +91,7 @@ class Submission extends Component {
           imageSrc={scLogoUrl}
           link={formatter.link()}
           onExpand={() => this.setState({isExpanded: !this.state.isExpanded})}
+          canExpand={!isEmptyOrSpaces(description)}
         />
         {this.state.isExpanded ? descriptionSection() : undefined}
         {shouldShowChips() ? chipSection() : undefined}

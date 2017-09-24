@@ -1,30 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Flexbox from 'flexbox-react';
-import {CardHeader, RaisedButton} from "material-ui";
+import {Avatar, CardHeader, ListItem, RaisedButton, TableHeader} from "material-ui";
 
 const SubmissionHeader = (props) => {
   const buttonStyle = {marginLeft: '4px', marginRight: '4px'};
+  const openLink = () => window.location = props.link;
   return (
     <Flexbox flexDirection='row' alignItems='flex-start'>
-      <CardHeader
+      <ListItem
         style={{textAlign: 'left'}}
-        avatar={props.imageSrc}
-        title={props.title}
-        subtitle={props.subtitle}
+        leftAvatar={<Avatar size={40} src={props.imageSrc}/>}
+        primaryText={props.title}
+        secondaryText={props.subtitle}
+        onClick={openLink}
       />
       <Flexbox style={{margin: 'auto', padding: '8px'}} justifyContent="center" height='100%'>
         <RaisedButton
           style={buttonStyle}
           label="LISTEN"
           primary
-          onClick={() => window.location = props.link}
+          onClick={openLink}
         />
         <RaisedButton
           style={buttonStyle}
           label="MORE"
           secondary
           onClick={props.onExpand}
+          disabled={!props.canExpand}
         />
       </Flexbox>
     </Flexbox>
@@ -32,12 +35,17 @@ const SubmissionHeader = (props) => {
   );
 };
 
+SubmissionHeader.defaultProps = {
+  canExpand: false,
+}
+
 SubmissionHeader.prototypes = {
   imageSrc: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.string.isRequired,
   link: PropTypes.string.isRequired,
-  onExpand: PropTypes.func.isRequired
+  onExpand: PropTypes.func.isRequired,
+  canExpand: PropTypes.bool,
 };
 
 export default SubmissionHeader;
