@@ -1,7 +1,8 @@
 import _ from 'lodash';
 
-const markdownLinkRegex = /(?:__|[*#])|\[(.*?)\]\(.*?\)/g;
-const markdownLinkWithSpaceRegex = /(?:__|[*#])|\[(.*?)\] \(.*?\)/g;
+const markdownLinkRegex = /(?:__|[*#])|\[(.*?)\]\(.*?\)/;
+const markdownLinkWithSpaceRegex = /(?:__|[*#])|\[(.*?)\] \(.*?\)/;
+const markdownLinkWithSpaceRegexGlobal = /(?:__|[*#])|\[(.*?)\] \(.*?\)/;
 const themedRegex = /(\[|\()Themed(]|\))/ig;
 const notThemedRegex = /(\[|\()Not Themed(]|\))/ig;
 
@@ -15,7 +16,7 @@ export default class Formatter {
   }
 
   fixMarkdownLinkWithSpace() {
-    if (this.formattedComment.match(markdownLinkWithSpaceRegex) != null) {
+    if (this.formattedComment.match(markdownLinkWithSpaceRegexGlobal) != null) {
       this.formattedComment = this.formattedComment
         .replace(/] \(/, "](");
     }
@@ -72,7 +73,7 @@ export default class Formatter {
   }
 
   description() {
-    return this.stripLink().stripThemedFlag().stripGenre().format();
+    return this.stripLink().stripThemedFlag().stripGenre().fixMarkdownLinkWithSpace().format();
   }
 
   genre() {

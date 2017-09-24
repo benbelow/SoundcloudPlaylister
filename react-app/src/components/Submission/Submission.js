@@ -1,11 +1,7 @@
 import React, {Component} from 'react';
 import ReactMarkdown from 'react-markdown';
 import PropTypes from 'prop-types';
-import Flexbox from 'flexbox-react';
-import {
-  Card, CardActions, CardHeader, CardMedia, CardText, CardTitle, Checkbox, Chip, Divider, FlatButton, FontIcon,
-  Paper, RaisedButton
-} from "material-ui";
+import {Chip, Divider, Paper} from "material-ui";
 import Formatter from "./Formatter";
 import SubmissionHeader from "./SubmissionHeader";
 
@@ -27,10 +23,6 @@ class Submission extends Component {
   }
 
   cardStyle = {};
-
-  cardContentStyle = {
-    width: '100%',
-  };
 
   chipStyle = {
     margin: '8px',
