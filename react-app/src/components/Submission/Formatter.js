@@ -14,6 +14,14 @@ export default class Formatter {
     this.formattedComment = comment;
   }
 
+  fixMarkdownLinkWithSpace() {
+    if (this.formattedComment.match(markdownLinkWithSpaceRegex) != null) {
+      this.formattedComment = this.formattedComment
+        .replace(/] \(/, "](");
+    }
+    return this;
+  }
+
   stripLink() {
     this.formattedComment = this.formattedComment
       .replace(markdownLinkRegex, "")
@@ -31,9 +39,6 @@ export default class Formatter {
 // This actually trims an matched set of parens or square brackets, and only if they are at the start of the string
 // This should be the case for songaweek comments, provided the link and theme flag have been stripped already
   stripGenre() {
-    const openingBrackets = this.formattedComment.match(openingBracketsRegex);
-
-    console.log("AAA: " + openingBrackets);
     this.formattedComment = this.formattedComment
       .replace(openingBracketsRegex, "")
       .replace(openingSquareBracketsRegex, "");
@@ -44,6 +49,12 @@ export default class Formatter {
     const value = _.clone(this.formattedComment);
     this.formattedComment = this.comment;
     return value;
+  }
+
+  link() {
+    let fixedComment = this.fixMarkdownLinkWithSpace().format();
+    let linkMatch = fixedComment.match(markdownLinkRegex);
+    return linkMatch ? linkMatch[0] : undefined;
   }
 
   description() {

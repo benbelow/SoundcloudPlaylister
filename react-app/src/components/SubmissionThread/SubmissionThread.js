@@ -50,8 +50,8 @@ class SubmissionThread extends Component {
         <CardActions/>
         <CardText expandable={true}>
           <ReactMarkdown source={description(thread)}/>
-          {_.map(this.submissions(), s => {
-            return <Submission author={s.author} comment={s.comment} />
+          {_.map(this.submissions(), (s, i) => {
+            return <Submission key={s.author + i} author={s.author} comment={s.comment} />
           })}
         </CardText>
       </Card>

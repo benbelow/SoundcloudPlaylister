@@ -13,10 +13,15 @@ class Submission extends Component {
   render() {
     const formatter = new Formatter(this.props.comment);
     const genre = formatter.genre();
+    const link = formatter.link();
+
+    if (typeof link === 'undefined' || !link) {
+      return null;
+    }
 
     return (
       <Paper>
-        {/*<p> {this.props.link} </p>*/}
+        <ReactMarkdown source={link}/>
         <p> <b>{this.props.author} </b></p>
         {genre ? <p> <i>Genre: {genre}</i> </p> : undefined}
         <ReactMarkdown source={formatter.description()}/>
