@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Card, CardActions, CardHeader, CardText, Divider, FlatButton, List, ListItem} from "material-ui";
+import {
+  Card, CardActions, CardHeader, CardText, Divider, FlatButton, GridList, GridTile, List,
+  ListItem
+} from "material-ui";
+import Flexbox from 'flexbox-react';
 import {description, theme, week} from "./ThreadHelpers";
 import ReactMarkdown from 'react-markdown';
 import {connect} from "react-redux";
@@ -17,6 +21,13 @@ class SubmissionThread extends Component {
 
   cardStyle = {
     margin: 16,
+  };
+
+  flexboxStyle = {
+    display: 'flex',
+    alignItems: 'flex-start',
+    justifyContent: 'space-around',
+    alignContent: 'stretch'
   };
 
   constructor(props) {
@@ -56,9 +67,17 @@ class SubmissionThread extends Component {
         <Divider/>
         <CardText expandable>
           <ReactMarkdown source={description(thread)}/>
-          {_.map(this.submissions(), (s, i) => {
-            return <Submission key={s.author + i} author={s.author} comment={s.comment} />
-          })}
+
+          <Flexbox style={this.flexboxStyle}
+                   flexDirection="row"
+                   flexWrap="wrap"
+                   flexBasis='content'
+          >
+            {_.map(this.submissions(), (s, i) => {
+              return <Flexbox margin="8px"> <Submission key={s.author + i} author={s.author} comment={s.comment}/></Flexbox>
+            })}
+          </Flexbox>
+
         </CardText>
       </Card>
     );

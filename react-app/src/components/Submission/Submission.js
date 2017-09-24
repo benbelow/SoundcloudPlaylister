@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import ReactMarkdown from 'react-markdown';
 import PropTypes from 'prop-types';
+import Flexbox from 'flexbox-react';
 import {
-  Card, CardActions, CardHeader, CardMedia, CardText, CardTitle, Checkbox, Divider, FlatButton, FontIcon,
-  Paper
+  Card, CardActions, CardHeader, CardMedia, CardText, CardTitle, Checkbox, Chip, Divider, FlatButton, FontIcon,
+  Paper, RaisedButton
 } from "material-ui";
 import Formatter from "./Formatter";
+import SubmissionHeader from "./SubmissionHeader";
 
 const scLogoUrl = "https://images.vexels.com/media/users/3/137412/isolated/preview/1802b9d8ce3c819eebe90a86bbb61077-soundcloud-icon-logo-by-vexels.png";
 
@@ -15,42 +17,63 @@ class Submission extends Component {
     author: PropTypes.string.isRequired,
   };
 
-  cardStyles = {
-    display: "inline-block",
+  cardStyle = {};
+
+  cardContentStyle = {
+    width: '100%',
+  };
+
+  chipStyle = {
+    margin: '8px',
+  };
+
+  chipContainerStyle = {
+    display: 'flex',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'center',
   };
 
   render() {
     const formatter = new Formatter(this.props.comment);
     const genre = formatter.genre();
     const link = formatter.markdownLink();
+    const shouldShowChips = () => {
+      return genre || themed;
+    };
+    const chipSection = () => {
+      return (
+        <div>
+          <Divider/>
+          <div style={this.chipContainerStyle}>
+            {genre ? <Chip style={this.chipStyle}> {genre} </Chip> : undefined}
+            <Chip style={this.chipStyle}> {themed ? 'Themed' : 'Not Themed'} </Chip>
+          </div>
+        </div>
+      )
+    };
 
+    const themed = formatter.themed();
     const songTitle = formatter.title();
-    if (typeof link === 'undefined' || !link) {
 
+    if (typeof link === 'undefined' || !link) {
       return null;
     }
     return (
-      <Card style={this.cardStyles}>
-        <CardHeader
+      <Paper style={this.cardStyle}>
+        <SubmissionHeader
+          style={{position: 'absolute'}}
           title={songTitle}
           subtitle={this.props.author}
-          avatar={scLogoUrl}
-          actAsExpander
-          showExpandableButton
+          imageSrc={scLogoUrl}
+          link={formatter.link()}
         />
-        <CardActions>
-          <FlatButton label="LISTEN" onClick={() => window.location = formatter.link()}>
-          </FlatButton>
-          {/*<FlatButton label={this.props.author} />*/}
-          <FlatButton label={genre}/>
-        </CardActions>
         <Divider/>
-        <CardText expandable>
+        <div style={{maxWidth: '350', margin: 'auto'}}>
           <ReactMarkdown source={formatter.description()}/>
-          <Divider/>
-          <Checkbox label="Themed" checked={formatter.themed()} disabled/>
-        </CardText>
-      </Card>
+        </div>
+        {shouldShowChips() ? chipSection() : undefined}
+      </Paper>
     )
   };
 }
