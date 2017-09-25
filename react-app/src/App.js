@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
+import Flexbox from 'flexbox-react';
 import {Provider} from 'react-redux';
 import {MuiThemeProvider} from 'material-ui';
-import logo from './logo.svg';
+import snoo from './snoo.png';
 import './App.css';
 import store from './redux/store';
 import ThreadFetcher from "./components/ThreadFetcher/ThreadFetcher";
@@ -14,8 +15,10 @@ class App extends Component {
         <MuiThemeProvider>
           <div className="App">
             <div className="App-header">
-              <img src={logo} className="App-logo" alt="logo"/>
-              <h2>The Song A Week Challenge</h2>
+              <Flexbox flexDirection='row'>
+                <img src={snoo} className="App-logo" alt="logo"/>
+                <h2 onClick={() => window.open('https://www.reddit.com/r/songaweek/')} className='App-title'>The Song A Week Challenge</h2>
+              </Flexbox>
             </div>
             <ThreadFetcher/>
             <SubmissionThreads/>
