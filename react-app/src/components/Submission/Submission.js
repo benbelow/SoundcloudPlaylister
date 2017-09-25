@@ -1,11 +1,12 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import ReactMarkdown from 'react-markdown';
 import PropTypes from 'prop-types';
-import {Chip, Divider, Paper} from "material-ui";
+import { Chip, Divider, Paper } from "material-ui";
 import Formatter from "./Formatter";
 import SubmissionHeader from "./SubmissionHeader";
-import {getHostIconUrl} from "./HostIcons";
+import { getHostIconUrl } from "./HostIcons";
 import muiThemeable from 'material-ui/styles/muiThemeable';
+import Flexbox from 'flexbox-react';
 
 function isEmptyOrSpaces(str) {
   return str === null || str.match(/^ *$/) !== null;
@@ -19,7 +20,7 @@ class Submission extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {isExpanded: false}
+    this.state = { isExpanded: false }
   }
 
   cardStyle = {};
@@ -45,7 +46,7 @@ class Submission extends Component {
       return (
         <div>
           <Divider/>
-          <div style={{maxWidth: '350px', margin: 'auto'}}>
+          <div style={{ maxWidth: '350px', margin: 'auto' }}>
             <ReactMarkdown source={description}/>
           </div>
         </div>
@@ -57,7 +58,8 @@ class Submission extends Component {
         <div>
           <Divider/>
           <div style={this.chipContainerStyle}>
-            {genre ? <Chip style={this.chipStyle} backgroundColor={this.props.muiTheme.palette.primary2Color}> {genre} </Chip> : undefined}
+            {genre ? <Chip style={this.chipStyle}
+                           backgroundColor={this.props.muiTheme.palette.primary2Color}> {genre} </Chip> : undefined}
             <Chip
               style={this.chipStyle}
               backgroundColor={themed ? this.props.muiTheme.palette.primary1Color : this.props.muiTheme.palette.disabledColor}
@@ -76,19 +78,21 @@ class Submission extends Component {
       return null;
     }
     return (
-      <Paper style={this.cardStyle}>
-        <SubmissionHeader
-          style={{position: 'absolute'}}
-          title={songTitle}
-          subtitle={this.props.author}
-          imageSrc={getHostIconUrl(link)}
-          link={formatter.link()}
-          onExpand={() => this.setState({isExpanded: !this.state.isExpanded})}
-          canExpand={!isEmptyOrSpaces(description)}
-        />
-        {this.state.isExpanded ? descriptionSection() : undefined}
-        {chipSection()}
-      </Paper>
+      <Flexbox margin="8px">
+        <Paper style={this.cardStyle}>
+          <SubmissionHeader
+            style={{ position: 'absolute' }}
+            title={songTitle}
+            subtitle={this.props.author}
+            imageSrc={getHostIconUrl(link)}
+            link={formatter.link()}
+            onExpand={() => this.setState({ isExpanded: !this.state.isExpanded })}
+            canExpand={!isEmptyOrSpaces(description)}
+          />
+          {this.state.isExpanded ? descriptionSection() : undefined}
+          {chipSection()}
+        </Paper>
+      </Flexbox>
     )
   };
 }

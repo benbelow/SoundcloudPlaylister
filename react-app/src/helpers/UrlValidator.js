@@ -25,7 +25,7 @@ const isClypUrl = url => {
 };
 
 const isYouTubeUrl = url => {
-  return url.includes("youtube.com") || url.includes("youtu.be/");
+  return (url.includes("youtube.com") || url.includes("youtu.be/")) && !url.includes('playlist?');
 };
 
 const isBandcampUrl = url => {
