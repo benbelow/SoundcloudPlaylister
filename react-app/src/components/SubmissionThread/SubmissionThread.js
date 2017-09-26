@@ -79,7 +79,7 @@ class SubmissionThread extends Component {
           <ReactMarkdown source={description(thread)}/>
 
           <Flexbox style={this.flexboxStyle}
-                   flexDirection="row"
+                   flexDirection="column"
                    flexWrap="wrap"
                    flexBasis='content'
           >

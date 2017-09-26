@@ -78,7 +78,7 @@ class Submission extends Component {
       return null;
     }
     return (
-      <Flexbox margin="8px">
+      <Flexbox margin="8px" marginRight='auto' marginLeft='auto'>
         <Paper style={this.cardStyle}>
           <SubmissionHeader
             style={{ position: 'absolute' }}
