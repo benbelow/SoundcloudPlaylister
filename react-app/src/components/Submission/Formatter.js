@@ -3,22 +3,23 @@ import _ from 'lodash';
 const markdownLinkRegex = /(?:__|[*#])|\[(.*?)\]\(.*?\)/;
 const markdownLinkWithSpaceRegex = /(?:__|[*#])|\[(.*?)\] \(.*?\)/;
 const markdownLinkWithSpaceRegexGlobal = /(?:__|[*#])|\[(.*?)\] \(.*?\)/;
-const themedRegex = /(\[|\()Themed(]|\))/ig;
-const notThemedRegex = /(\[|\()Not Themed(]|\))/ig;
+const themedRegex = /(\[|\()Themed(]|\))/i;
+const notThemedRegex = /(\[|\()Not Themed(]|\))/i;
 
-const openingBracketsRegex = /^(\s?)+\(([^)]+)\)/g;
-const openingSquareBracketsRegex = /^(\s?)+\[([^\]]+)]/g;
+const openingBracketsRegex = /^(\s?)+\(([^)]+)\)/;
+const openingSquareBracketsRegex = /^(\s?)+\[([^\]]+)]/;
+
+//todo refactor this class - chaining is good, but must require the state gets reset or bad stuff happens. 2x classes?
 
 export default class Formatter {
   constructor(comment) {
-    this.comment = comment;
-    this.formattedComment = comment;
+    this.comment = _.clone(comment);
+    this.formattedComment = _.clone(comment);
   }
 
   fixMarkdownLinkWithSpace() {
-    if (this.formattedComment.match(markdownLinkWithSpaceRegexGlobal) != null) {
-      this.formattedComment = this.formattedComment
-        .replace(/] \(/, "](");
+    if (this.formattedComment.match(markdownLinkWithSpaceRegexGlobal) !== null) {
+      this.formattedComment = this.formattedComment.replace(/] \(/, "](");
     }
     return this;
   }
@@ -48,7 +49,7 @@ export default class Formatter {
 
   format() {
     const value = _.clone(this.formattedComment);
-    this.formattedComment = this.comment;
+    this.formattedComment = _.clone(this.comment);
     return value;
   }
 

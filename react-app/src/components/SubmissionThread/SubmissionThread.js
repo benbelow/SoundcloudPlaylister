@@ -39,8 +39,8 @@ class SubmissionThread extends Component {
     if (!this.props.isThemedFilter) {
       return () => true;
     }
-    console.log(submission.comment);
-    return new Formatter(submission.comment).themed();
+    const formatter = new Formatter(submission.comment);
+    return formatter.themed();
   };
 
   submissions() {
@@ -49,20 +49,8 @@ class SubmissionThread extends Component {
     if (!currentThread) {
       return undefined;
     } else {
-      console.log("submissions");
-      console.log(currentThread.submissions);
-      return _(currentThread.submissions)
-        .filter(this.themedFilter)
-        .value();
+      return _.filter(currentThread.submissions, this.themedFilter);
     }
-
-    // let currentSubmissionThread = _.filter(this.props.threadSubmissions, ts => this.props.thread.id === ts.threadId);
-    // console.log(currentSubmissionThread);
-    // const submissions = _.defaultTo(currentSubmissionThread && currentSubmissionThread.submissions, []);
-    // return submissions;
-    // return _(submissions)
-    //   .filter(this.themedFilter)
-    //   .value();
   }
 
   fetchSubmissions() {

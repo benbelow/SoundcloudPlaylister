@@ -17,7 +17,6 @@ class App extends Component {
             <AppHeader/>
             <div className="App-body">
               <ThreadFetcher/>
-              <Filters/>
               <SubmissionThreads/>
             </div>
           </div>

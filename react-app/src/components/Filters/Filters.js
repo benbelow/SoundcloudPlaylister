@@ -22,18 +22,15 @@ class Filters extends Component {
 
   render() {
     return (
-      <Drawer width={200} open={this.props.showMenu} openSecondary >
-        <div>
-          <Toggle style={{ margin: '4px' }} label="Themed" onToggle={this.onThemedToggle}/>
-        </div>
-      </Drawer>
+      <div>
+        <Toggle style={{ margin: '4px' }} label="Themed" onToggle={this.onThemedToggle}/>
+      </div>
     )
   }
 }
 
 const mapStateToProps = state => {
   return {
-    showMenu: state.header.showMenu,
     themed: state.filters.themed,
   }
 };
